@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Coredownload.h"
 namespace CppCLRWinFormsProject {
 
 	using namespace System;

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Coredownload.h"
+#include "..\\..\\..\\Core\\Coredownload\\Coredownload.h"
 #include "DownloadItemControl.h"
 namespace CppCLRWinFormsProject {
 

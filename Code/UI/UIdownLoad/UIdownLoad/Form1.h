@@ -42,11 +42,16 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel1;
 	private: System::Windows::Forms::Panel^ panel1;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Label^ nameFile;
+	private: System::Windows::Forms::Label^ speedFile;
+	private: System::Windows::Forms::Label^ statusFile;
+
+
+
+	private: System::Windows::Forms::Label^ sizeFile;
+	private: System::Windows::Forms::Label^ dayFile;
+
+
 
 	private:
 		/// <summary>
@@ -65,11 +70,11 @@ namespace CppCLRWinFormsProject {
 			this->listView1 = (gcnew System::Windows::Forms::ListView());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->dayFile = (gcnew System::Windows::Forms::Label());
+			this->speedFile = (gcnew System::Windows::Forms::Label());
+			this->statusFile = (gcnew System::Windows::Forms::Label());
+			this->sizeFile = (gcnew System::Windows::Forms::Label());
+			this->nameFile = (gcnew System::Windows::Forms::Label());
 			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
@@ -122,61 +127,62 @@ namespace CppCLRWinFormsProject {
 			this->panel1->AllowDrop = true;
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->panel1->Controls->Add(this->label7);
-			this->panel1->Controls->Add(this->label6);
-			this->panel1->Controls->Add(this->label5);
-			this->panel1->Controls->Add(this->label4);
-			this->panel1->Controls->Add(this->label3);
+			this->panel1->Controls->Add(this->dayFile);
+			this->panel1->Controls->Add(this->speedFile);
+			this->panel1->Controls->Add(this->statusFile);
+			this->panel1->Controls->Add(this->sizeFile);
+			this->panel1->Controls->Add(this->nameFile);
 			this->panel1->Location = System::Drawing::Point(6, 28);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(692, 26);
 			this->panel1->TabIndex = 2;
 			// 
-			// label7
+			// dayFile
 			// 
-			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(530, 10);
-			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(57, 16);
-			this->label7->TabIndex = 4;
-			this->label7->Text = L"Ngày tải";
+			this->dayFile->AutoSize = true;
+			this->dayFile->Location = System::Drawing::Point(530, 10);
+			this->dayFile->Name = L"dayFile";
+			this->dayFile->Size = System::Drawing::Size(57, 16);
+			this->dayFile->TabIndex = 4;
+			this->dayFile->Text = L"Ngày tải";
+			this->dayFile->Click += gcnew System::EventHandler(this, &Form1::label7_Click);
 			// 
-			// label6
+			// speedFile
 			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(250, 10);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(50, 16);
-			this->label6->TabIndex = 3;
-			this->label6->Text = L"Tốc độ";
+			this->speedFile->AutoSize = true;
+			this->speedFile->Location = System::Drawing::Point(250, 10);
+			this->speedFile->Name = L"speedFile";
+			this->speedFile->Size = System::Drawing::Size(50, 16);
+			this->speedFile->TabIndex = 3;
+			this->speedFile->Text = L"Tốc độ";
 			// 
-			// label5
+			// statusFile
 			// 
-			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(400, 10);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(67, 16);
-			this->label5->TabIndex = 2;
-			this->label5->Text = L"Trạng thái";
-			this->label5->Click += gcnew System::EventHandler(this, &Form1::label5_Click);
+			this->statusFile->AutoSize = true;
+			this->statusFile->Location = System::Drawing::Point(400, 10);
+			this->statusFile->Name = L"statusFile";
+			this->statusFile->Size = System::Drawing::Size(67, 16);
+			this->statusFile->TabIndex = 2;
+			this->statusFile->Text = L"Trạng thái";
+			this->statusFile->Click += gcnew System::EventHandler(this, &Form1::label5_Click);
 			// 
-			// label4
+			// sizeFile
 			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(130, 10);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(67, 16);
-			this->label4->TabIndex = 1;
-			this->label4->Text = L"Kích thước";
+			this->sizeFile->AutoSize = true;
+			this->sizeFile->Location = System::Drawing::Point(130, 10);
+			this->sizeFile->Name = L"sizeFile";
+			this->sizeFile->Size = System::Drawing::Size(67, 16);
+			this->sizeFile->TabIndex = 1;
+			this->sizeFile->Text = L"Kích thước";
 			// 
-			// label3
+			// nameFile
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(-3, 10);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(53, 16);
-			this->label3->TabIndex = 0;
-			this->label3->Text = L"Tên tệp";
+			this->nameFile->AutoSize = true;
+			this->nameFile->Location = System::Drawing::Point(-3, 10);
+			this->nameFile->Name = L"nameFile";
+			this->nameFile->Size = System::Drawing::Size(53, 16);
+			this->nameFile->TabIndex = 0;
+			this->nameFile->Text = L"Tên tệp";
 			// 
 			// flowLayoutPanel1
 			// 
@@ -257,6 +263,8 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 	}
 }
 private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

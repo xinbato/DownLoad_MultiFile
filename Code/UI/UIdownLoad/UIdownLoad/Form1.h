@@ -20,7 +20,6 @@ namespace CppCLRWinFormsProject {
 		{
 			InitializeComponent();
 			//
-			//TODO: Add the constructor code here
 			//
 		}
 
@@ -126,7 +125,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->panel1->AllowDrop = true;
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->panel1->ForeColor = System::Drawing::Color::White;
 			this->panel1->Controls->Add(this->dayFile);
 			this->panel1->Controls->Add(this->speedFile);
 			this->panel1->Controls->Add(this->statusFile);

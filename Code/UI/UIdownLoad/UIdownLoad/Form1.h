@@ -57,6 +57,7 @@ namespace CppCLRWinFormsProject {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+		System::Drawing::Font^ headerFont = gcnew System::Drawing::Font("Segoe UI", 9, System::Drawing::FontStyle::Bold);
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -65,6 +66,7 @@ namespace CppCLRWinFormsProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->BackColor = System::Drawing::Color::FromArgb(240, 242, 245);
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->listView1 = (gcnew System::Windows::Forms::ListView());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -106,6 +108,8 @@ namespace CppCLRWinFormsProject {
 			// listView1
 			// 
 			this->listView1->HideSelection = false;
+			this->listView1->BackColor = System::Drawing::Color::White;
+			this->listView1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->listView1->Location = System::Drawing::Point(15, 28);
 			this->listView1->Name = L"listView1";
 			this->listView1->Size = System::Drawing::Size(320, 447);
@@ -115,6 +119,9 @@ namespace CppCLRWinFormsProject {
 			// label1
 			// 
 			this->label1->AutoSize = true;
+			this->label1->Font = headerFont;
+			this->label1->Font = gcnew System::Drawing::Font("Segoe UI", 10, System::Drawing::FontStyle::Bold);
+			
 			this->label1->Location = System::Drawing::Point(12, 9);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(96, 16);
@@ -124,8 +131,9 @@ namespace CppCLRWinFormsProject {
 			// panel1
 			// 
 			this->panel1->AllowDrop = true;
-			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
-			this->panel1->ForeColor = System::Drawing::Color::White;
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(192, 255, 255);
+			this->panel1->ForeColor = System::Drawing::Color::Black;
+			this->panel1->Height = 35;
 			this->panel1->Controls->Add(this->dayFile);
 			this->panel1->Controls->Add(this->speedFile);
 			this->panel1->Controls->Add(this->statusFile);
@@ -139,6 +147,7 @@ namespace CppCLRWinFormsProject {
 			// dayFile
 			// 
 			this->dayFile->AutoSize = true;
+			this->dayFile->ForeColor = System::Drawing::Color::Black;
 			this->dayFile->Location = System::Drawing::Point(530, 10);
 			this->dayFile->Name = L"dayFile";
 			this->dayFile->Size = System::Drawing::Size(57, 16);
@@ -149,6 +158,7 @@ namespace CppCLRWinFormsProject {
 			// speedFile
 			// 
 			this->speedFile->AutoSize = true;
+			this->speedFile->ForeColor = System::Drawing::Color::Black;
 			this->speedFile->Location = System::Drawing::Point(250, 10);
 			this->speedFile->Name = L"speedFile";
 			this->speedFile->Size = System::Drawing::Size(50, 16);
@@ -158,6 +168,7 @@ namespace CppCLRWinFormsProject {
 			// statusFile
 			// 
 			this->statusFile->AutoSize = true;
+			this->statusFile->ForeColor = System::Drawing::Color::Black;
 			this->statusFile->Location = System::Drawing::Point(400, 10);
 			this->statusFile->Name = L"statusFile";
 			this->statusFile->Size = System::Drawing::Size(67, 16);
@@ -168,6 +179,7 @@ namespace CppCLRWinFormsProject {
 			// sizeFile
 			// 
 			this->sizeFile->AutoSize = true;
+			this->sizeFile->ForeColor = System::Drawing::Color::Black;
 			this->sizeFile->Location = System::Drawing::Point(130, 10);
 			this->sizeFile->Name = L"sizeFile";
 			this->sizeFile->Size = System::Drawing::Size(67, 16);
@@ -177,6 +189,7 @@ namespace CppCLRWinFormsProject {
 			// nameFile
 			// 
 			this->nameFile->AutoSize = true;
+			this->nameFile->ForeColor = System::Drawing::Color::Black;
 			this->nameFile->Location = System::Drawing::Point(-3, 10);
 			this->nameFile->Name = L"nameFile";
 			this->nameFile->Size = System::Drawing::Size(53, 16);
@@ -197,6 +210,8 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(3, 9);
+			this->label2->Font = headerFont;
+			this->label2->Font = gcnew System::Drawing::Font("Segoe UI", 10, System::Drawing::FontStyle::Bold);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(70, 16);
 			this->label2->TabIndex = 0;
@@ -264,6 +279,12 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void DownloadItem_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+	this->BackColor = System::Drawing::Color::AliceBlue;
+}
+private: System::Void DownloadItem_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+	this->BackColor = System::Drawing::Color::White;
 }
 };
 }

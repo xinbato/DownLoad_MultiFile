@@ -42,7 +42,6 @@ Một ứng dụng quản lý tải xuống nhiều tệp tin cùng lúc với g
 2. Đảm bảo đã cài đặt package **Desktop development with C++** và **C++/CLI support**.
 3. Nhấn `F5` để biên dịch và chạy ứng dụng.
 
----
-**👤 Tác giả:** [Tên của bạn]  
+---  
 **📅 Cập nhật lần cuối:** 27/03/2026  
 **🏫 Đồ án:** Lập trình mạng / Windows Programming.

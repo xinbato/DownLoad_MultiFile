@@ -1,48 +1,48 @@
-DownLoad_MultiFile
-Multi-File Downloader (C++/CLI)
-Ứng dụng hỗ trợ tải xuống nhiều tệp tin cùng lúc với giao diện hiện đại, được xây dựng bằng ngôn ngữ C++/CLI trên nền tảng Windows Forms.
+# 🚀 Multi-File Downloader (C++/CLI)
 
-Tính năng nổi bật
-Drag & Drop: Kéo thả tệp tin trực tiếp từ Windows Explorer vào ứng dụng để chuẩn bị tải.
+Một ứng dụng quản lý tải xuống nhiều tệp tin cùng lúc với giao diện hiện đại, tối ưu hóa trải nghiệm người dùng trên nền tảng **Windows Forms**.
 
-Giao diện Card UI: Thiết kế hiện đại với các thẻ (Cards) riêng biệt cho từng tệp tin.
+---
 
-Thông tin chi tiết: Hiển thị Tên tệp, Kích thước, Tốc độ, Trạng thái và Ngày thêm tệp.
+### ✨ Tính năng nổi bật
 
-Hiệu ứng Hover: Giao diện phản hồi mượt mà khi di chuột qua các mục danh sách.
+* **🖱️ Drag & Drop:** Kéo thả tệp tin trực tiếp từ Windows Explorer vào ứng dụng để chuẩn bị tải.
+* **🗂️ Giao diện Card UI:** Thiết kế các thẻ (Cards) riêng biệt, giúp danh sách tệp tin rõ ràng, dễ nhìn.
+* **📊 Thông tin thời gian thực:** Hiển thị chi tiết Tên tệp, Kích thước, Tốc độ, Trạng thái và Ngày thêm.
+* **✨ Hiệu ứng Tương tác:** Giao diện phản hồi mượt mà (Hover effect) khi di chuyển chuột qua các mục.
+* **⚙️ Quản lý luồng động:** Sử dụng `FlowLayoutPanel` để tự động sắp xếp danh sách tệp tin không giới hạn.
 
-Quản lý luồng: Hỗ trợ xử lý danh sách tệp tin động qua FlowLayoutPanel.
+---
 
-Công nghệ sử dụng
-Ngôn ngữ: C++/CLI (Visual C++)
+### 🛠 Công nghệ & Công cụ sử dụng
 
-Framework: .NET Framework (Windows Forms)
+| Thành phần | Chi tiết công nghệ |
+| :--- | :--- |
+| **Ngôn ngữ lập trình** | C++/CLI (Visual C++) |
+| **Framework** | .NET Framework (Windows Forms) |
+| **Môi trường phát triển** | Visual Studio 2022 |
+| **Kiến trúc** | Custom UserControl & Event-driven Programming |
 
-Công cụ: Visual Studio 2022
+---
 
-Thành phần chính: * SplitContainer: Chia đôi màn hình quản lý.
+### 📂 Cấu trúc dự án chính
 
-Custom UserControl: DownloadItemControl để hiển thị từng dòng tải xuống.
+> [!TIP]
+> Dự án được thiết kế theo hướng module hóa để dễ dàng nâng cấp logic tải xuống sau này.
 
-DragDrop Events: Xử lý tương tác kéo thả.
+* **`Form1.h`**: Điều khiển luồng chính, xử lý sự kiện kéo thả và quản lý danh sách.
+* **`DownloadItemControl.h`**: Thành phần UI tùy chỉnh cho từng dòng tệp tin (giữ layout xanh Cyan đặc trưng).
+* **`Core/Coredownload/`**: Thư viện xử lý logic kết nối và tải dữ liệu xuống máy tính.
 
-Giao diện ứng dụng
-Hướng dẫn: Bạn có thể chụp ảnh màn hình ứng dụng và lưu vào thư mục images, sau đó thay link dưới đây.
+---
 
-Hướng dẫn cài đặt & Chạy
-Yêu cầu: Đã cài đặt Visual Studio (có gói Desktop development with C++ và C++/CLI support).
+### 🚀 Hướng dẫn chạy thử
 
-Clone dự án:
+1. Mở file `.sln` bằng **Visual Studio 2022**.
+2. Đảm bảo đã cài đặt package **Desktop development with C++** và **C++/CLI support**.
+3. Nhấn `F5` để biên dịch và chạy ứng dụng.
 
-Bash
-git clone https://github.com/xinbato/DownLoad_MultiFile
-Mở Project: Mở file .sln bằng Visual Studio.
-
-Build & Run: Nhấn F5 hoặc nút Start để biên dịch và trải nghiệm.
-
-Cấu trúc thư mục chính
-Form1.h: Luồng xử lý chính và giao diện tổng thể.
-
-DownloadItemControl.h: Thành phần giao diện tùy chỉnh cho từng tệp tin.
-
-Core/: Chứa các thư viện xử lý logic tải xuống (Coredownload).
+---
+**👤 Tác giả:** [Tên của bạn]  
+**📅 Cập nhật lần cuối:** 27/03/2026  
+**🏫 Đồ án:** Lập trình mạng / Windows Programming.

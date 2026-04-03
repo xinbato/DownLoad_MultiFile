@@ -43,5 +43,5 @@ Một ứng dụng quản lý tải xuống nhiều tệp tin cùng lúc với g
 3. Nhấn `F5` để biên dịch và chạy ứng dụng.
 
 ---  
-**📅 Cập nhật lần cuối:** 27/03/2026  
+**📅 Cập nhật lần cuối:** 03/04/2026  
 **🏫 Đồ án:** Lập trình mạng / Windows Programming.

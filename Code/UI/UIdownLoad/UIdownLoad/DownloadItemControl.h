@@ -166,5 +166,10 @@ namespace UIdownLoad {
 #pragma endregion
 	private: System::Void lblPercent_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (this->Parent != nullptr) {
+			this->Parent->Controls->Remove(this);
+		}
+	}
 };
 }

@@ -115,6 +115,17 @@ namespace CppCLRWinFormsProject {
 			this->splitContainer1->SplitterDistance = 356;
 			this->splitContainer1->TabIndex = 0;
 			// 
+			// listBoxFiles
+			// 
+			this->listBoxFiles->FormattingEnabled = true;
+			this->listBoxFiles->ItemHeight = 16;
+			this->listBoxFiles->Location = System::Drawing::Point(16, 28);
+			this->listBoxFiles->Name = L"listBoxFiles";
+			this->listBoxFiles->SelectionMode = System::Windows::Forms::SelectionMode::MultiExtended;
+			this->listBoxFiles->Size = System::Drawing::Size(320, 452);
+			this->listBoxFiles->TabIndex = 6;
+			this->listBoxFiles->SelectedIndexChanged += gcnew System::EventHandler(this, &Form1::listBoxFiles_SelectedIndexChanged);
+			// 
 			// listView1
 			// 
 			this->listView1->HideSelection = false;

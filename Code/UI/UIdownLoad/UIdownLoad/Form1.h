@@ -116,6 +116,16 @@ namespace CppCLRWinFormsProject {
 			this->listView1->TabIndex = 1;
 			this->listView1->UseCompatibleStateImageBehavior = false;
 			// 
+			// btnRefresh_Click
+			// 
+			this->btnRefresh_Click->Location = System::Drawing::Point(256, 0);
+			this->btnRefresh_Click->Name = L"btnRefresh_Click";
+			this->btnRefresh_Click->Size = System::Drawing::Size(75, 23);
+			this->btnRefresh_Click->TabIndex = 5;
+			this->btnRefresh_Click->Text = L"Làm mới";
+			this->btnRefresh_Click->UseVisualStyleBackColor = true;
+			this->btnRefresh_Click->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
+			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
@@ -285,6 +295,21 @@ private: System::Void DownloadItem_MouseEnter(System::Object^ sender, System::Ev
 }
 private: System::Void DownloadItem_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 	this->BackColor = System::Drawing::Color::White;
+}
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ ip = "127.0.0.1";
+	int port = 9000;
+	// Xóa danh sách listBoxFiles cũ
+	listBoxFiles->Items->Clear();
+	auto files = CoreLogic::Downloader::GetFileListFromServer(ip, port);
+	if (files->Count == 0) {
+		MessageBox::Show("Server không có file nào hoặc mất kết nối!");
+		return;
+	}
+	// Đổ dữ liệu vào listBoxFiles
+	for each(String ^ fileName in files) {
+		listBoxFiles->Items->Add(fileName);
+	}
 }
 };
 }

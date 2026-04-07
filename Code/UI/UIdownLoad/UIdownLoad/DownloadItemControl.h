@@ -136,6 +136,7 @@ namespace UIdownLoad {
 			this->button1->TabIndex = 6;
 			this->button1->Text = L"X";
 			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &DownloadItemControl::button1_Click);
 			// 
 			// lblSpeed
 			// 
@@ -165,6 +166,22 @@ namespace UIdownLoad {
 		}
 #pragma endregion
 	private: System::Void lblPercent_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	public: void UpdateProgress(int percent, System::String^ speedTxt) {
+	// Phải kiểm tra InvokeRequired vì hàm này bị gọi từ luồng ngầm (Core)
+	if (this->InvokeRequired) {
+		this->Invoke(gcnew System::Action<int, System::String^>(this, &DownloadItemControl::UpdateProgress), percent, speedTxt);
+		return;
+	}
+	// Cập nhật giao diện
+	this->progressBar1->Value = percent;
+	this->lblPercent->Text = percent.ToString() + "%";
+	this->lblSpeed->Text = speedTxt;
+}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (this->Parent != nullptr) {
+			this->Parent->Controls->Remove(this);
+		}
 	}
 };
 }

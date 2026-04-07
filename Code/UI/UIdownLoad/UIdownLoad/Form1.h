@@ -9,7 +9,9 @@ namespace CppCLRWinFormsProject {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	using namespace System::Net;
+	using namespace System::Threading;
+	
 	/// <summary>
 	/// Summary for Form1
 	/// </summary>
@@ -19,8 +21,8 @@ namespace CppCLRWinFormsProject {
 		Form1(void)
 		{
 			InitializeComponent();
-			//
-			//
+			// Đăng ký sự kiện MouseDown cho listBoxFiles bằng code (phòng khi bạn chưa bấm ở giao diện)
+			this->listBoxFiles->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::listBoxFiles_MouseDown);
 		}
 
 	protected:
@@ -44,11 +46,13 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ nameFile;
 	private: System::Windows::Forms::Label^ speedFile;
 	private: System::Windows::Forms::Label^ statusFile;
+	private: System::ComponentModel::Container^ components;
+	private: System::Windows::Forms::Button^ btnDownload;
+	private: System::Windows::Forms::CheckedListBox^ checkedListBox1;
+	private: System::Windows::Forms::Button^ btnRefresh_Click;
+	private: System::Windows::Forms::ListBox^ listBoxFiles;
 
-
-
-	private: System::Windows::Forms::Label^ sizeFile;
-	private: System::Windows::Forms::Label^ dayFile;
+		   System::Drawing::Font^ headerFont = gcnew System::Drawing::Font("Segoe UI", 9, System::Drawing::FontStyle::Bold);
 
 
 
@@ -66,8 +70,10 @@ namespace CppCLRWinFormsProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->BackColor = System::Drawing::Color::FromArgb(240, 242, 245);
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
+			this->btnRefresh_Click = (gcnew System::Windows::Forms::Button());
+			this->btnDownload = (gcnew System::Windows::Forms::Button());
+			this->checkedListBox1 = (gcnew System::Windows::Forms::CheckedListBox());
 			this->listView1 = (gcnew System::Windows::Forms::ListView());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());

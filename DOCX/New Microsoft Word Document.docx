@@ -18,4 +18,4 @@ Máy chủ bằng địa chỉ IP và cổng dịch vụ của nó. Để đảm
 ứng dụng của bạn chỉ có thể lấy một tệp mỗi lần, điều này gây lãng phí rất lớn về năng lượng mạng và CPU. Vì vậy, ý tưởng đằng sau Lập trình đa luồng (Đa luồng) là trong C++ 11 trở lên, teh Tiêu chuẩn std::thread cho phép bạn khởi động nhiều luồng chạy cùng lúc trong cùng một không gian bộ nhớ của một tiến trình Bằng cách giao mỗi công việc tải xuống tệp cho Luồng công nhân riêng của nó, HĐH có thể chuyển đổi giữa các luồng này để sử dụng thời gian CPU Sự kết hợp giữa Socket
 TCP và Multithreading xây dựng một hệ thống I/O mạng không đồng bộ, thực sự cắt giảm thời gian chờ đợi và tận dụng tối đa luồng dữ liệu
 3. Phân tích và thiết kế:
-Để đảm bảo dự án có thể phát triển và dễ theo kịp, chúng tôi chia nhỏ mã nguồn dựa trên ý tưởng thiết kế Tách biệt mối quan tâm. Cấu trúc của phần mềm được chia thành ba lớp chính, mỗi lớp giao tiếp với nhau bằng các cách thiết lập
+Để đảm bảo dự án có thể phát triển và dễ theo kịp, chúng tôi chia nhỏ mã nguồn dựa trên ý tưởng thiết kế Tách biệt mối quan tâm. Cấu trúc của phần mềm được chia thành ba lớp chính, mỗi lớp giao tiếp với nhau bằng các cách thiết lập.

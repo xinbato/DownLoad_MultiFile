@@ -278,35 +278,63 @@ namespace CppCLRWinFormsProject {
 		}
 	}
 private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
-	// Ép kiểu lấy danh sách đường dẫn file
-	array<System::String^>^ files = safe_cast<array<System::String^>^>(e->Data->GetData(System::Windows::Forms::DataFormats::FileDrop));
+		String^ saveFolder = "D:\\Downloads\\"; // Thư mục lưu file
 
-	if (files == nullptr) return;
+		// TRƯỜNG HỢP 1: THẢ FILE TỪ BẢNG DANH SÁCH BÊN TRÁI (TẢI TCP LOCAL)
+		if (e->Data->GetDataPresent("ServerFiles")) {
+			// Giải nén gói hàng lấy ra danh sách tên file
+			array<String^>^ files = (array<String^>^)e->Data->GetData("ServerFiles");
 
-	// Duyệt qua từng file được thả vào
-	for each (System::String ^ filePath in files) {
+			// Tạo một đống thẻ và luồng tải cùng lúc
+			for each(String ^ fileName in files) {
+				UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
+				downloadItem->SetupInfo(fileName, "Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
+				flowLayoutPanel1->Controls->Add(downloadItem);
 
-		System::IO::FileInfo^ fileInfo = gcnew System::IO::FileInfo(filePath);
+				System::Threading::Thread^ downloadThread = gcnew System::Threading::Thread(
+					gcnew System::Threading::ParameterizedThreadStart(this, &Form1::DownloadTask)
+				);
+				array<System::Object^>^ args = gcnew array<System::Object^>(3);
+				args[0] = fileName;
+				args[1] = saveFolder;
+				args[2] = downloadItem;
+				downloadThread->Start(args);
+			}
+		}
+		// TRƯỜNG HỢP 2: THẢ LINK TỪ WEB VÀO (TẢI HTTP INTERNET)
+		else if (e->Data->GetDataPresent(System::Windows::Forms::DataFormats::Text)) {
+			String^ url = e->Data->GetData(System::Windows::Forms::DataFormats::Text)->ToString();
 
-		System::String^ fileName = fileInfo->Name;
+			if (url->Contains("http://") || url->Contains("https://")) {
+				Uri^ uri = gcnew Uri(url);
+				String^ fileName = System::IO::Path::GetFileName(uri->LocalPath);
 
-		// Tính dung lượng file ra MB
-		double sizeInMB = fileInfo->Length / (1024.0 * 1024.0);
-		System::String^ fileSize = System::Math::Round(sizeInMB, 2).ToString() + " MB";
+				if (String::IsNullOrEmpty(fileName) || !fileName->Contains(".")) {
+					fileName = "anh_mang_" + System::DateTime::Now.ToString("HHmmss") + ".jpg";
+				}
 
-		// Lấy ngày tháng hiện tại
-		System::String^ date = System::DateTime::Now.ToString("dd/MM/yyyy");
+				UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
+				downloadItem->SetupInfo(fileName, "Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
+				flowLayoutPanel1->Controls->Add(downloadItem);
 
-		// Gọi cái khuôn giao diện ra (Nhớ thay UIdownLoad bằng namespace của bạn nếu báo lỗi đỏ)
-		UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
+				System::Threading::Thread^ downloadThread = gcnew System::Threading::Thread(
+					gcnew System::Threading::ParameterizedThreadStart(this, &Form1::DownloadHttpTask)
+				);
 
-		// Truyền dữ liệu vào
-		downloadItem->SetupInfo(fileName, fileSize, date);
-
-		// Nhét vào bảng hiển thị
-		flowLayoutPanel1->Controls->Add(downloadItem);
+				// Đã sửa thành mảng 4 phần tử
+				array<System::Object^>^ args = gcnew array<System::Object^>(4);
+				args[0] = url;
+				args[1] = saveFolder;
+				args[2] = downloadItem;
+				args[3] = fileName;
+				downloadThread->Start(args);
+			}
+			else {
+				MessageBox::Show("URL không hợp lệ! Vui lòng kéo link HTTP/HTTPS.");
+			}
+		}
 	}
-}
+
 private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {

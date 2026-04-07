@@ -99,6 +99,10 @@ namespace CppCLRWinFormsProject {
 			// 
 			// splitContainer1.Panel1
 			// 
+			this->splitContainer1->Panel1->Controls->Add(this->listBoxFiles);
+			this->splitContainer1->Panel1->Controls->Add(this->btnRefresh_Click);
+			this->splitContainer1->Panel1->Controls->Add(this->btnDownload);
+			this->splitContainer1->Panel1->Controls->Add(this->checkedListBox1);
 			this->splitContainer1->Panel1->Controls->Add(this->listView1);
 			this->splitContainer1->Panel1->Controls->Add(this->label1);
 			// 

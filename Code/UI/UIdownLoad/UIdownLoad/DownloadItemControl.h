@@ -136,6 +136,7 @@ namespace UIdownLoad {
 			this->button1->TabIndex = 6;
 			this->button1->Text = L"X";
 			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &DownloadItemControl::button1_Click);
 			// 
 			// lblSpeed
 			// 

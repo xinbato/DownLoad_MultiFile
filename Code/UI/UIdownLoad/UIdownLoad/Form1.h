@@ -116,6 +116,16 @@ namespace CppCLRWinFormsProject {
 			this->listView1->TabIndex = 1;
 			this->listView1->UseCompatibleStateImageBehavior = false;
 			// 
+			// btnRefresh_Click
+			// 
+			this->btnRefresh_Click->Location = System::Drawing::Point(256, 0);
+			this->btnRefresh_Click->Name = L"btnRefresh_Click";
+			this->btnRefresh_Click->Size = System::Drawing::Size(75, 23);
+			this->btnRefresh_Click->TabIndex = 5;
+			this->btnRefresh_Click->Text = L"Làm mới";
+			this->btnRefresh_Click->UseVisualStyleBackColor = true;
+			this->btnRefresh_Click->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
+			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;

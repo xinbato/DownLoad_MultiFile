@@ -335,6 +335,25 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 		}
 	}
 
+	private: void DownloadTask(System::Object^ obj) {
+		array<System::Object^>^ args = (array<System::Object^>^)obj;
+		String^ fileName = (String^)args[0];
+		String^ saveFolder = (String^)args[1];
+		UIdownLoad::DownloadItemControl^ itemControl = (UIdownLoad::DownloadItemControl^)args[2];
+
+		String^ ip = "127.0.0.1";
+		int port = 9000;
+
+		System::Action<int, String^>^ progressCallback = gcnew System::Action<int, String^>(itemControl, &UIdownLoad::DownloadItemControl::UpdateProgress);
+		bool success = CoreLogic::Downloader::DownloadFileFromTCPServer(ip, port, fileName, saveFolder, progressCallback);
+
+		this->Invoke(gcnew System::Action<bool, UIdownLoad::DownloadItemControl^>(this, &Form1::UpdateUI), success, itemControl);
+	}
+
+		   // ==========================================
+		   // LUỒNG TẢI TỪ INTERNET (HTTP)
+		   // ==========================================
+
 private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {

@@ -265,7 +265,15 @@ private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Win
 		// Chỉ bắt đầu kéo nếu người dùng chọn bằng chuột trái và có ít nhất 1 file được bôi đen
 		if (listBoxFiles->SelectedItems->Count == 0 || e->Button != System::Windows::Forms::MouseButtons::Left) return;
 
-		
+		// Gom toàn bộ file được chọn vào mảng
+		array<String^>^ selectedFiles = gcnew array<String^>(listBoxFiles->SelectedItems->Count);
+		for (int i = 0; i < listBoxFiles->SelectedItems->Count; i++) {
+			selectedFiles[i] = listBoxFiles->SelectedItems[i]->ToString();
+		}
+
+		// Tạo gói hàng tên "ServerFiles" để ném sang bảng bên kia
+		System::Windows::Forms::DataObject^ dragData = gcnew System::Windows::Forms::DataObject("ServerFiles", selectedFiles);
+		listBoxFiles->DoDragDrop(dragData, System::Windows::Forms::DragDropEffects::Copy);
 
 #pragma endregion
 	private: System::Void flowLayoutPanel1_DragEnter(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {

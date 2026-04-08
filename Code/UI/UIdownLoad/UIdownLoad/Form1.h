@@ -64,6 +64,7 @@ namespace CppCLRWinFormsProject {
 		void InitializeComponent(void)
 		{
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
+			this->listBoxFiles = (gcnew System::Windows::Forms::ListBox());
 			this->btnRefresh_Click = (gcnew System::Windows::Forms::Button());
 			this->btnDownload = (gcnew System::Windows::Forms::Button());
 			this->checkedListBox1 = (gcnew System::Windows::Forms::CheckedListBox());
@@ -143,12 +144,10 @@ namespace CppCLRWinFormsProject {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = headerFont;
-			this->label1->Font = gcnew System::Drawing::Font("Segoe UI", 10, System::Drawing::FontStyle::Bold);
-			
+			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Bold));
 			this->label1->Location = System::Drawing::Point(12, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(96, 16);
+			this->label1->Size = System::Drawing::Size(124, 23);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Danh sách File";
 			// 
@@ -157,7 +156,6 @@ namespace CppCLRWinFormsProject {
 			this->panel1->AllowDrop = true;
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(192, 255, 255);
 			this->panel1->ForeColor = System::Drawing::Color::Black;
-			this->panel1->Height = 35;
 			this->panel1->Controls->Add(this->dayFile);
 			this->panel1->Controls->Add(this->speedFile);
 			this->panel1->Controls->Add(this->statusFile);
@@ -264,12 +262,13 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 	private: System::Void flowLayoutPanel1_DragEnter(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
-		// Kiểm tra xem có phải người dùng đang kéo File vào không
-		if (e->Data->GetDataPresent(System::Windows::Forms::DataFormats::FileDrop)) {
-			e->Effect = System::Windows::Forms::DragDropEffects::Copy; // Bật biểu tượng dấu +
+		// Nhận gói hàng Server ("ServerFiles") HOẶC link web (Text)
+		if (e->Data->GetDataPresent("ServerFiles") ||
+			e->Data->GetDataPresent(System::Windows::Forms::DataFormats::Text)) {
+			e->Effect = System::Windows::Forms::DragDropEffects::Copy;
 		}
 		else {
-			e->Effect = System::Windows::Forms::DragDropEffects::None; // Bật biểu tượng cấm
+			e->Effect = System::Windows::Forms::DragDropEffects::None;
 		}
 	}
 private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {

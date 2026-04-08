@@ -46,6 +46,8 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ nameFile;
 	private: System::Windows::Forms::Label^ speedFile;
 	private: System::Windows::Forms::Label^ statusFile;
+	private: System::Windows::Forms::Label^ sizeFile;
+	private: System::Windows::Forms::Label^ dayFile;
 	private: System::ComponentModel::Container^ components;
 	private: System::Windows::Forms::Button^ btnDownload;
 	private: System::Windows::Forms::CheckedListBox^ checkedListBox1;

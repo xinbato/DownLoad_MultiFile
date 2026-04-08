@@ -260,6 +260,13 @@ namespace CppCLRWinFormsProject {
 			this->ResumeLayout(false);
 
 		}
+
+private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+		// Chỉ bắt đầu kéo nếu người dùng chọn bằng chuột trái và có ít nhất 1 file được bôi đen
+		if (listBoxFiles->SelectedItems->Count == 0 || e->Button != System::Windows::Forms::MouseButtons::Left) return;
+
+		
+
 #pragma endregion
 	private: System::Void flowLayoutPanel1_DragEnter(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
 		// Nhận gói hàng Server ("ServerFiles") HOẶC link web (Text)

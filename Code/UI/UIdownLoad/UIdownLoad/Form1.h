@@ -346,17 +346,38 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 		   // ==========================================
 		   // LUỒNG TẢI TỪ INTERNET (HTTP)
 		   // ==========================================
+private: void DownloadHttpTask(System::Object^ obj) {
+		array<System::Object^>^ args = (array<System::Object^>^)obj;
+		String^ url = (String^)args[0];
+		String^ saveFolder = (String^)args[1];
+		UIdownLoad::DownloadItemControl^ itemControl = (UIdownLoad::DownloadItemControl^)args[2];
 
-private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void DownloadItem_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
-	this->BackColor = System::Drawing::Color::AliceBlue;
-}
-private: System::Void DownloadItem_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-	this->BackColor = System::Drawing::Color::White;
-}
+		String^ fileName;
+		if (args->Length > 3 && args[3] != nullptr) {
+			fileName = (String^)args[3];
+		}
+		else {
+			fileName = "downloaded_file.dat";
+		}
+
+		System::Action<int, String^>^ progressCallback = gcnew System::Action<int, String^>(itemControl, &UIdownLoad::DownloadItemControl::UpdateProgress);
+		bool success = CoreLogic::Downloader::DownloadFromHttp(url, fileName, saveFolder, progressCallback);
+
+		this->Invoke(gcnew System::Action<bool, UIdownLoad::DownloadItemControl^>(this, &Form1::UpdateUI), success, itemControl);
+	}
+			   // ==========================================
+		   // CẬP NHẬT UI KHI TẢI XONG
+		   // ==========================================
+	private: void UpdateUI(bool success, UIdownLoad::DownloadItemControl^ itemControl) {
+		if (success) {
+			MessageBox::Show(this, "Đã tải xong file!", "Thành công", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		}
+		else {
+			MessageBox::Show(this, "Không tìm thấy file trên Server hoặc mất kết nối!", "Lỗi", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+
+				
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	String^ ip = "127.0.0.1";
 	int port = 9000;
@@ -380,4 +401,4 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	private: System::Void listBoxFiles_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {}
 	private: System::Void btnDownload_Click_1(System::Object^ sender, System::EventArgs^ e) {}
 };
-};
+}

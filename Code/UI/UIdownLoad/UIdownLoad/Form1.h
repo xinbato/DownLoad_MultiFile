@@ -54,15 +54,6 @@ namespace CppCLRWinFormsProject {
 
 		   System::Drawing::Font^ headerFont = gcnew System::Drawing::Font("Segoe UI", 9, System::Drawing::FontStyle::Bold);
 
-
-
-	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		System::ComponentModel::Container ^components;
-		System::Drawing::Font^ headerFont = gcnew System::Drawing::Font("Segoe UI", 9, System::Drawing::FontStyle::Bold);
-
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -252,6 +243,8 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(240)), static_cast<System::Int32>(static_cast<System::Byte>(242)),
+				   static_cast<System::Int32>(static_cast<System::Byte>(245)));
 			this->ClientSize = System::Drawing::Size(1070, 625);
 			this->Controls->Add(this->splitContainer1);
 			this->Name = L"Form1";
@@ -379,5 +372,12 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		listBoxFiles->Items->Add(fileName);
 	}
 }
+	// Các sự kiện UI nhỏ nhặt giữ nguyên
+	private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {}
+	private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {}
+	private: System::Void DownloadItem_MouseEnter(System::Object^ sender, System::EventArgs^ e) { this->BackColor = System::Drawing::Color::AliceBlue; }
+	private: System::Void DownloadItem_MouseLeave(System::Object^ sender, System::EventArgs^ e) { this->BackColor = System::Drawing::Color::White; }
+	private: System::Void listBoxFiles_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {}
+	private: System::Void btnDownload_Click_1(System::Object^ sender, System::EventArgs^ e) {}
 };
 };

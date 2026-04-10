@@ -297,7 +297,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 			// Tạo một đống thẻ và luồng tải cùng lúc
 			for each(String ^ fileName in files) {
 				UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
-				downloadItem->SetupInfo(fileName, "Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
+				downloadItem->SetupInfo(fileName, L"Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
 				flowLayoutPanel1->Controls->Add(downloadItem);
 
 				System::Threading::Thread^ downloadThread = gcnew System::Threading::Thread(
@@ -323,7 +323,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 				}
 
 				UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
-				downloadItem->SetupInfo(fileName, "Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
+				downloadItem->SetupInfo(fileName, L"Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
 				flowLayoutPanel1->Controls->Add(downloadItem);
 
 				System::Threading::Thread^ downloadThread = gcnew System::Threading::Thread(
@@ -339,7 +339,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 				downloadThread->Start(args);
 			}
 			else {
-				MessageBox::Show("URL không hợp lệ! Vui lòng kéo link HTTP/HTTPS.");
+				MessageBox::Show(L"URL không hợp lệ! Vui lòng kéo link HTTP/HTTPS.");
 			}
 		}
 	}
@@ -394,7 +394,9 @@ private: void DownloadHttpTask(System::Object^ obj) {
 			btnRefresh_Click->Enabled=true;
 		}
 	}
-
+			// ==========================================
+		   // NUT LAM MOI DANH SACH TU SERVER
+		   // ==========================================
 				
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	String^ ip = "127.0.0.1";
@@ -409,6 +411,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	// Đổ dữ liệu vào listBoxFiles
 	for each(String ^ fileName in files) {
 		listBoxFiles->Items->Add(fileName);
+		btnRefresh_Click->Enabled=false;
 	}
 }
 	// Các sự kiện UI nhỏ nhặt giữ nguyên

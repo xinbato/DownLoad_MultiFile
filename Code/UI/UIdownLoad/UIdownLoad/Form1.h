@@ -133,7 +133,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			// btnRefresh_Click
 			// 
-			this->btnRefresh_Click->Location = System::Drawing::Point(256, 0);
+			this->btnRefresh_Click->Location = System::Drawing::Point(131, 531);
 			this->btnRefresh_Click->Name = L"btnRefresh_Click";
 			this->btnRefresh_Click->Size = System::Drawing::Size(75, 23);
 			this->btnRefresh_Click->TabIndex = 5;
@@ -387,9 +387,11 @@ private: void DownloadHttpTask(System::Object^ obj) {
 	private: void UpdateUI(bool success, UIdownLoad::DownloadItemControl^ itemControl) {
 		if (success) {
 			MessageBox::Show(this, L"Đã tải xong file!", "Thành công", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			btnRefresh_Click->Enabled=true;
 		}
 		else {
 			MessageBox::Show(this, L"Không tìm thấy file trên Server hoặc mất kết nối!", "Lỗi", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			btnRefresh_Click->Enabled=true;
 		}
 	}
 
@@ -401,7 +403,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	listBoxFiles->Items->Clear();
 	auto files = CoreLogic::Downloader::GetFileListFromServer(ip, port);
 	if (files->Count == 0) {
-		MessageBox::Show("Server không có file nào hoặc mất kết nối!");
+		MessageBox::Show(L"Server không có file nào hoặc mất kết nối!");
 		return;
 	}
 	// Đổ dữ liệu vào listBoxFiles

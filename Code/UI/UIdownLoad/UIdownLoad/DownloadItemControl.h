@@ -83,10 +83,9 @@ namespace UIdownLoad {
 			// 
 			// lblName
 			// 
-			this->lblName->AutoSize = true;
 			this->lblName->Location = System::Drawing::Point(0, 15);
 			this->lblName->Name = L"lblName";
-			this->lblName->Size = System::Drawing::Size(44, 16);
+			this->lblName->Size = System::Drawing::Size(97, 16);
 			this->lblName->TabIndex = 0;
 			this->lblName->Text = L"label1";
 			// 

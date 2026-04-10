@@ -386,10 +386,10 @@ private: void DownloadHttpTask(System::Object^ obj) {
 		   // ==========================================
 	private: void UpdateUI(bool success, UIdownLoad::DownloadItemControl^ itemControl) {
 		if (success) {
-			MessageBox::Show(this, "Đã tải xong file!", "Thành công", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show(this, L"Đã tải xong file!", "Thành công", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 		else {
-			MessageBox::Show(this, "Không tìm thấy file trên Server hoặc mất kết nối!", "Lỗi", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			MessageBox::Show(this, L"Không tìm thấy file trên Server hoặc mất kết nối!", "Lỗi", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
 

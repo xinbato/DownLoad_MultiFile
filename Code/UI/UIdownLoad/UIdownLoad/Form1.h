@@ -111,23 +111,12 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->listBoxFiles->FormattingEnabled = true;
 			this->listBoxFiles->ItemHeight = 16;
-			this->listBoxFiles->Location = System::Drawing::Point(16, 28);
+			this->listBoxFiles->Location = System::Drawing::Point(16, 38);
 			this->listBoxFiles->Name = L"listBoxFiles";
 			this->listBoxFiles->SelectionMode = System::Windows::Forms::SelectionMode::MultiExtended;
 			this->listBoxFiles->Size = System::Drawing::Size(320, 452);
 			this->listBoxFiles->TabIndex = 6;
 			this->listBoxFiles->SelectedIndexChanged += gcnew System::EventHandler(this, &Form1::listBoxFiles_SelectedIndexChanged);
-			// 
-			// listView1
-			// 
-			this->listView1->HideSelection = false;
-			this->listView1->BackColor = System::Drawing::Color::White;
-			this->listView1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->listView1->Location = System::Drawing::Point(15, 28);
-			this->listView1->Name = L"listView1";
-			this->listView1->Size = System::Drawing::Size(320, 447);
-			this->listView1->TabIndex = 1;
-			this->listView1->UseCompatibleStateImageBehavior = false;
 			// 
 			// btnRefresh_Click
 			// 
@@ -138,6 +127,25 @@ namespace CppCLRWinFormsProject {
 			this->btnRefresh_Click->Text = L"Làm mới";
 			this->btnRefresh_Click->UseVisualStyleBackColor = true;
 			this->btnRefresh_Click->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
+			// 
+			// checkedListBox1
+			// 
+			this->checkedListBox1->Location = System::Drawing::Point(69, 85);
+			this->checkedListBox1->Name = L"checkedListBox1";
+			this->checkedListBox1->Size = System::Drawing::Size(120, 89);
+			this->checkedListBox1->TabIndex = 7;
+			this->checkedListBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Form1::checkedListBox1_SelectedIndexChanged);
+			// 
+			// listView1
+			// 
+			this->listView1->BackColor = System::Drawing::Color::White;
+			this->listView1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->listView1->HideSelection = false;
+			this->listView1->Location = System::Drawing::Point(16, 43);
+			this->listView1->Name = L"listView1";
+			this->listView1->Size = System::Drawing::Size(320, 447);
+			this->listView1->TabIndex = 1;
+			this->listView1->UseCompatibleStateImageBehavior = false;
 			// 
 			// label1
 			// 
@@ -152,13 +160,14 @@ namespace CppCLRWinFormsProject {
 			// panel1
 			// 
 			this->panel1->AllowDrop = true;
-			this->panel1->BackColor = System::Drawing::Color::FromArgb(192, 255, 255);
-			this->panel1->ForeColor = System::Drawing::Color::Black;
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->panel1->Controls->Add(this->dayFile);
 			this->panel1->Controls->Add(this->speedFile);
 			this->panel1->Controls->Add(this->statusFile);
 			this->panel1->Controls->Add(this->sizeFile);
 			this->panel1->Controls->Add(this->nameFile);
+			this->panel1->ForeColor = System::Drawing::Color::Black;
 			this->panel1->Location = System::Drawing::Point(6, 28);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(692, 26);
@@ -229,11 +238,10 @@ namespace CppCLRWinFormsProject {
 			// label2
 			// 
 			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Bold));
 			this->label2->Location = System::Drawing::Point(3, 9);
-			this->label2->Font = headerFont;
-			this->label2->Font = gcnew System::Drawing::Font("Segoe UI", 10, System::Drawing::FontStyle::Bold);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(70, 16);
+			this->label2->Size = System::Drawing::Size(100, 23);
 			this->label2->TabIndex = 0;
 			this->label2->Text = L"Khu vực tải";
 			// 
@@ -242,7 +250,7 @@ namespace CppCLRWinFormsProject {
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(240)), static_cast<System::Int32>(static_cast<System::Byte>(242)),
-				   static_cast<System::Int32>(static_cast<System::Byte>(245)));
+				static_cast<System::Int32>(static_cast<System::Byte>(245)));
 			this->ClientSize = System::Drawing::Size(1070, 625);
 			this->Controls->Add(this->splitContainer1);
 			this->Name = L"Form1";
@@ -427,5 +435,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	private: System::Void DownloadItem_MouseLeave(System::Object^ sender, System::EventArgs^ e) { this->BackColor = System::Drawing::Color::White; }
 	private: System::Void listBoxFiles_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {}
 	private: System::Void btnDownload_Click_1(System::Object^ sender, System::EventArgs^ e) {}
-	};
+	private: System::Void checkedListBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

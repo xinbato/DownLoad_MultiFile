@@ -21,7 +21,7 @@ namespace CppCLRWinFormsProject {
 		Form1(void)
 		{
 			InitializeComponent();
-			// Đăng ký sự kiện MouseDown cho listBoxFiles bằng code (phòng khi bạn chưa bấm ở giao diện)
+			// Đăng ký sự kiện MouseDown cho listBoxFiles bằng code 
 			this->listBoxFiles->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::listBoxFiles_MouseDown);
 		}
 
@@ -49,7 +49,7 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ sizeFile;
 	private: System::Windows::Forms::Label^ dayFile;
 	private: System::ComponentModel::Container^ components;
-	private: System::Windows::Forms::Button^ btnDownload;
+	
 	private: System::Windows::Forms::CheckedListBox^ checkedListBox1;
 	private: System::Windows::Forms::Button^ btnRefresh_Click;
 	private: System::Windows::Forms::ListBox^ listBoxFiles;
@@ -66,7 +66,6 @@ namespace CppCLRWinFormsProject {
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->listBoxFiles = (gcnew System::Windows::Forms::ListBox());
 			this->btnRefresh_Click = (gcnew System::Windows::Forms::Button());
-			this->btnDownload = (gcnew System::Windows::Forms::Button());
 			this->checkedListBox1 = (gcnew System::Windows::Forms::CheckedListBox());
 			this->listView1 = (gcnew System::Windows::Forms::ListView());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -95,7 +94,6 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->splitContainer1->Panel1->Controls->Add(this->listBoxFiles);
 			this->splitContainer1->Panel1->Controls->Add(this->btnRefresh_Click);
-			this->splitContainer1->Panel1->Controls->Add(this->btnDownload);
 			this->splitContainer1->Panel1->Controls->Add(this->checkedListBox1);
 			this->splitContainer1->Panel1->Controls->Add(this->listView1);
 			this->splitContainer1->Panel1->Controls->Add(this->label1);
@@ -260,7 +258,7 @@ namespace CppCLRWinFormsProject {
 			this->ResumeLayout(false);
 
 		}
-
+ // SỰ KIỆN NẮM FILE (KÉO TỪ LIST BÊN TRÁI)
 private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		// Chỉ bắt đầu kéo nếu người dùng chọn bằng chuột trái và có ít nhất 1 file được bôi đen
 		if (listBoxFiles->SelectedItems->Count == 0 || e->Button != System::Windows::Forms::MouseButtons::Left) return;
@@ -274,8 +272,10 @@ private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Win
 		// Tạo gói hàng tên "ServerFiles" để ném sang bảng bên kia
 		System::Windows::Forms::DataObject^ dragData = gcnew System::Windows::Forms::DataObject("ServerFiles", selectedFiles);
 		listBoxFiles->DoDragDrop(dragData, System::Windows::Forms::DragDropEffects::Copy);
+}
 
-#pragma endregion
+ // SỰ KIỆN LƯỚT CHUỘT QUA Ô TẢI
+
 	private: System::Void flowLayoutPanel1_DragEnter(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
 		// Nhận gói hàng Server ("ServerFiles") HOẶC link web (Text)
 		if (e->Data->GetDataPresent("ServerFiles") ||
@@ -286,6 +286,9 @@ private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Win
 			e->Effect = System::Windows::Forms::DragDropEffects::None;
 		}
 	}
+
+ // SỰ KIỆN THẢ CHUỘT ĐỂ BẮT ĐẦU TẢI
+
 private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
 		String^ saveFolder = "D:\\Downloads\\"; // Thư mục lưu file
 
@@ -330,7 +333,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 					gcnew System::Threading::ParameterizedThreadStart(this, &Form1::DownloadHttpTask)
 				);
 
-				// Đã sửa thành mảng 4 phần tử
+				// mảng 4 phần tử
 				array<System::Object^>^ args = gcnew array<System::Object^>(4);
 				args[0] = url;
 				args[1] = saveFolder;
@@ -344,6 +347,9 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 		}
 	}
 
+
+				   // LUỒNG TẢI TỪ SERVER LOCAL (TCP)
+				
 	private: void DownloadTask(System::Object^ obj) {
 		array<System::Object^>^ args = (array<System::Object^>^)obj;
 		String^ fileName = (String^)args[0];
@@ -381,9 +387,9 @@ private: void DownloadHttpTask(System::Object^ obj) {
 
 		this->Invoke(gcnew System::Action<bool, UIdownLoad::DownloadItemControl^>(this, &Form1::UpdateUI), success, itemControl);
 	}
-			   // ==========================================
-		   // CẬP NHẬT UI KHI TẢI XONG
-		   // ==========================================
+		// ==========================================
+		// CẬP NHẬT UI KHI TẢI XONG
+		// ==========================================
 	private: void UpdateUI(bool success, UIdownLoad::DownloadItemControl^ itemControl) {
 		if (success) {
 			MessageBox::Show(this, L"Đã tải xong file!", "Thành công", MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -421,5 +427,5 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	private: System::Void DownloadItem_MouseLeave(System::Object^ sender, System::EventArgs^ e) { this->BackColor = System::Drawing::Color::White; }
 	private: System::Void listBoxFiles_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {}
 	private: System::Void btnDownload_Click_1(System::Object^ sender, System::EventArgs^ e) {}
-};
+	};
 }

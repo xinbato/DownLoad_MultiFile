@@ -38,8 +38,8 @@ namespace CoreLogic {
 
             return fileList;
         }
-        // Original method with progress callback
-        static bool DownloadFileFromTCPServer(String^ ip, int port, String^ fileName, String^ saveFolder, Action<int, String^>^ onProgress)
+        // 1. HÀM TẢI TCP
+        static bool DownloadFileFromTCPServer(String^ ip, int port, String^ fileName, String^ saveFolder, Action<int, String^, String^>^ onProgress)
         {
             try {
                 TcpClient^ client = gcnew TcpClient(ip, port);
@@ -51,75 +51,58 @@ namespace CoreLogic {
                 writer->Flush();
 
                 long long fileSize = reader->ReadInt64();
-                if (fileSize == 0) {
-                    client->Close(); return false;
-                }
+                if (fileSize == 0) { client->Close(); return false; }
+
+                // Tính kích thước MB
+                String^ sizeStr = Math::Round(fileSize / 1024.0 / 1024.0, 2).ToString() + " MB";
 
                 String^ fullSavePath = Path::Combine(saveFolder, fileName);
                 FileStream^ fs = gcnew FileStream(fullSavePath, FileMode::Create, FileAccess::Write);
-
                 array<Byte>^ buffer = gcnew array<Byte>(4096);
                 int bytesRead;
                 long long totalReceived = 0;
-
-              
                 int lastPercent = -1;
-                // Bắt đầu tính giờ để đo tốc độ
                 DateTime startTime = DateTime::Now;
 
-                while (totalReceived < fileSize) {
-                    bytesRead = stream->Read(buffer, 0, buffer->Length);
-                    if (bytesRead == 0) break;
-
+                while ((bytesRead = stream->Read(buffer, 0, buffer->Length)) > 0) {
                     fs->Write(buffer, 0, bytesRead);
                     totalReceived += bytesRead;
-
-                    // TÍNH TOÁN %
                     int percent = (int)((totalReceived * 100) / fileSize);
 
-                    // Cập nhật UI 
                     if (percent > lastPercent) {
                         lastPercent = percent;
-
-                        // TÍNH TỐC ĐỘ (MB/s)
                         TimeSpan elapsed = DateTime::Now - startTime;
-                        double seconds = elapsed.TotalSeconds;
                         String^ speedTxt = "Đang tải...";
-
-                        if (seconds > 0) {
-                            double speedMBps = (totalReceived / 1024.0 / 1024.0) / seconds;
+                        if (elapsed.TotalSeconds > 0) {
+                            double speedMBps = (totalReceived / 1024.0 / 1024.0) / elapsed.TotalSeconds;
                             speedTxt = Math::Round(speedMBps, 2).ToString() + " MB/s";
                         }
-
-                        // Bắn dữ liệu về cho Form
-                        if (onProgress != nullptr) {
-                            onProgress(percent, speedTxt);
-                        }
+                        // GỬI 3 THÔNG SỐ VỀ UI
+                        if (onProgress != nullptr) onProgress(percent, speedTxt, sizeStr);
                     }
                 }
-
-                fs->Close();
-                client->Close();
-                return true;
+                fs->Close(); client->Close(); return true;
             }
-            catch (Exception^) {
-                return false;
-            }
+            catch (Exception^) { return false; }
         }
-        static bool DownloadFromHttp(String^ url, String^ fileName, String^ saveFolder, Action<int, String^>^ onProgress)
+
+        // 2. HÀM TẢI HTTP
+        static bool DownloadFromHttp(String^ url, String^ fileName, String^ saveFolder, Action<int, String^, String^>^ onProgress)
         {
             try {
                 System::Net::ServicePointManager::SecurityProtocol = (System::Net::SecurityProtocolType)3072;
                 System::Net::HttpWebRequest^ request = (System::Net::HttpWebRequest^)System::Net::WebRequest::Create(url);
                 request->Timeout = 5000;
-                request->UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+                request->UserAgent = "Mozilla/5.0";
 
                 System::Net::HttpWebResponse^ response = (System::Net::HttpWebResponse^)request->GetResponse();
                 long long fileSize = response->ContentLength;
 
-                // CHỈ DÙNG ĐÚNG TÊN FILE MÀ GIAO DIỆN TRUYỀN XUỐNG
-                String^ fullSavePath = System::IO::Path::Combine(saveFolder, fileName);
+                // Tính kích thước MB
+                String^ sizeStr = "Không xác định";
+                if (fileSize > 0) sizeStr = Math::Round(fileSize / 1024.0 / 1024.0, 2).ToString() + " MB";
 
+                String^ fullSavePath = System::IO::Path::Combine(saveFolder, fileName);
                 System::IO::Stream^ stream = response->GetResponseStream();
                 System::IO::FileStream^ fs = gcnew System::IO::FileStream(fullSavePath, System::IO::FileMode::Create, System::IO::FileAccess::Write);
 
@@ -132,36 +115,24 @@ namespace CoreLogic {
                 while ((bytesRead = stream->Read(buffer, 0, buffer->Length)) > 0) {
                     fs->Write(buffer, 0, bytesRead);
                     totalReceived += bytesRead;
-
                     if (fileSize > 0) {
                         int percent = (int)((totalReceived * 100) / fileSize);
                         if (percent > lastPercent) {
                             lastPercent = percent;
                             TimeSpan elapsed = DateTime::Now - startTime;
-                            double seconds = elapsed.TotalSeconds;
                             String^ speedTxt = "Đang tải...";
-                            if (seconds > 0) {
-                                double speedMBps = (totalReceived / 1024.0 / 1024.0) / seconds;
+                            if (elapsed.TotalSeconds > 0) {
+                                double speedMBps = (totalReceived / 1024.0 / 1024.0) / elapsed.TotalSeconds;
                                 speedTxt = Math::Round(speedMBps, 2).ToString() + " MB/s";
                             }
-                            if (onProgress != nullptr) onProgress(percent, speedTxt);
+                            // GỬI 3 THÔNG SỐ VỀ UI
+                            if (onProgress != nullptr) onProgress(percent, speedTxt, sizeStr);
                         }
                     }
                 }
-                fs->Close();
-                stream->Close();
-                response->Close();
-                return true;
+                fs->Close(); stream->Close(); response->Close(); return true;
             }
-            catch (Exception^ ex) {
-                System::Windows::Forms::MessageBox::Show("Lỗi Core: " + ex->Message);
-                return false;
-            }
-        }
-        // Backward-compatible overload without progress callback
-        static bool DownloadFileFromTCPServer(String^ ip, int port, String^ fileName, String^ saveFolder)
-        {
-            return DownloadFileFromTCPServer(ip, port, fileName, saveFolder, nullptr);
+            catch (Exception^) { return false; }
         }
     };
 }

@@ -100,7 +100,7 @@ namespace UIdownLoad {
 			// 
 			// progressBar1
 			// 
-			this->progressBar1->Location = System::Drawing::Point(251, 11);
+			this->progressBar1->Location = System::Drawing::Point(380, 11);
 			this->progressBar1->Name = L"progressBar1";
 			this->progressBar1->Size = System::Drawing::Size(74, 23);
 			this->progressBar1->TabIndex = 2;
@@ -108,7 +108,7 @@ namespace UIdownLoad {
 			// lblPercent
 			// 
 			this->lblPercent->AutoSize = true;
-			this->lblPercent->Location = System::Drawing::Point(331, 15);
+			this->lblPercent->Location = System::Drawing::Point(460, 15);
 			this->lblPercent->Name = L"lblPercent";
 			this->lblPercent->Size = System::Drawing::Size(44, 16);
 			this->lblPercent->TabIndex = 3;
@@ -129,7 +129,7 @@ namespace UIdownLoad {
 			this->button1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				static_cast<System::Int32>(static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::Red;
-			this->button1->Location = System::Drawing::Point(650, 6);
+			this->button1->Location = System::Drawing::Point(658, 6);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(37, 35);
 			this->button1->TabIndex = 6;
@@ -140,7 +140,7 @@ namespace UIdownLoad {
 			// lblSpeed
 			// 
 			this->lblSpeed->AutoSize = true;
-			this->lblSpeed->Location = System::Drawing::Point(400, 15);
+			this->lblSpeed->Location = System::Drawing::Point(250, 15);
 			this->lblSpeed->Name = L"lblSpeed";
 			this->lblSpeed->Size = System::Drawing::Size(44, 16);
 			this->lblSpeed->TabIndex = 7;
@@ -158,7 +158,7 @@ namespace UIdownLoad {
 			this->Controls->Add(this->lblSize);
 			this->Controls->Add(this->lblName);
 			this->Name = L"DownloadItemControl";
-			this->Size = System::Drawing::Size(690, 50);
+			this->Size = System::Drawing::Size(700, 50);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -166,17 +166,17 @@ namespace UIdownLoad {
 #pragma endregion
 	private: System::Void lblPercent_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-	public: void UpdateProgress(int percent, System::String^ speedTxt) {
-	// Phải kiểm tra InvokeRequired vì hàm này bị gọi từ luồng ngầm (Core)
-	if (this->InvokeRequired) {
-		this->Invoke(gcnew System::Action<int, System::String^>(this, &DownloadItemControl::UpdateProgress), percent, speedTxt);
-		return;
+	public: void UpdateProgress(int percent, System::String^ speedTxt, System::String^ sizeTxt) {
+		if (this->InvokeRequired) {
+			this->Invoke(gcnew System::Action<int, System::String^, System::String^>(this, &DownloadItemControl::UpdateProgress), percent, speedTxt, sizeTxt);
+			return;
+		}
+		// Cập nhật lên Giao diện
+		this->progressBar1->Value = percent;
+		this->lblPercent->Text = percent.ToString() + "%";
+		this->lblSpeed->Text = speedTxt;
+		this->lblSize->Text = sizeTxt; // <--- Điểm mấu chốt là chỗ này!
 	}
-	// Cập nhật giao diện
-	this->progressBar1->Value = percent;
-	this->lblPercent->Text = percent.ToString() + "%";
-	this->lblSpeed->Text = speedTxt;
-}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (this->Parent != nullptr) {
 			this->Parent->Controls->Remove(this);

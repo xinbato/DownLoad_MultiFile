@@ -198,7 +198,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->statusFile->AutoSize = true;
 			this->statusFile->ForeColor = System::Drawing::Color::Black;
-			this->statusFile->Location = System::Drawing::Point(400, 10);
+			this->statusFile->Location = System::Drawing::Point(377, 10);
 			this->statusFile->Name = L"statusFile";
 			this->statusFile->Size = System::Drawing::Size(67, 16);
 			this->statusFile->TabIndex = 2;
@@ -298,50 +298,70 @@ private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Win
  // SỰ KIỆN THẢ CHUỘT ĐỂ BẮT ĐẦU TẢI
 
 private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
-		String^ saveFolder = "D:\\Downloads\\"; // Thư mục lưu file
+	String^ saveFolder = "D:\\Downloads\\"; // Thư mục lưu file
 
-		// TRƯỜNG HỢP 1: THẢ FILE TỪ BẢNG DANH SÁCH BÊN TRÁI (TẢI TCP LOCAL)
-		if (e->Data->GetDataPresent("ServerFiles")) {
-			// Giải nén gói hàng lấy ra danh sách tên file
-			array<String^>^ files = (array<String^>^)e->Data->GetData("ServerFiles");
+	// =========================================================
+	// TRƯỜNG HỢP 1: THẢ FILE TỪ DANH SÁCH BÊN TRÁI (TẢI TCP LOCAL)
+	// =========================================================
+	if (e->Data->GetDataPresent("ServerFiles")) {
+		array<String^>^ files = (array<String^>^)e->Data->GetData("ServerFiles");
 
-			// Tạo một đống thẻ và luồng tải cùng lúc
-			for each(String ^ fileName in files) {
-				UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
-				downloadItem->SetupInfo(fileName, L"Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
-				flowLayoutPanel1->Controls->Add(downloadItem);
+		for each (String ^ fileName in files) {
+			UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
+			downloadItem->SetupInfo(fileName,"", System::DateTime::Now.ToString("dd/MM/yyyy HH:mm"));
+			flowLayoutPanel1->Controls->Add(downloadItem);
 
-				System::Threading::Thread^ downloadThread = gcnew System::Threading::Thread(
-					gcnew System::Threading::ParameterizedThreadStart(this, &Form1::DownloadTask)
-				);
-				array<System::Object^>^ args = gcnew array<System::Object^>(3);
-				args[0] = fileName;
-				args[1] = saveFolder;
-				args[2] = downloadItem;
-				downloadThread->Start(args);
-			}
+			System::Threading::Thread^ downloadThread = gcnew System::Threading::Thread(
+				gcnew System::Threading::ParameterizedThreadStart(this, &Form1::DownloadTask)
+			);
+			array<System::Object^>^ args = gcnew array<System::Object^>(3);
+			args[0] = fileName;
+			args[1] = saveFolder;
+			args[2] = downloadItem;
+			downloadThread->Start(args);
 		}
-		// TRƯỜNG HỢP 2: THẢ LINK TỪ WEB VÀO (TẢI HTTP INTERNET)
-		else if (e->Data->GetDataPresent(System::Windows::Forms::DataFormats::Text)) {
-			String^ url = e->Data->GetData(System::Windows::Forms::DataFormats::Text)->ToString();
+	}
+	// =========================================================
+		// TRƯỜNG HỢP 2: THẢ LINK TỪ WEB/NOTEPAD VÀO (HỖ TRỢ MULTI-LINK)
+		// =========================================================
+	else if (e->Data->GetDataPresent(System::Windows::Forms::DataFormats::Text)) {
+		String^ draggedText = e->Data->GetData(System::Windows::Forms::DataFormats::Text)->ToString();
 
-			if (url->Contains("http://") || url->Contains("https://")) {
-				Uri^ uri = gcnew Uri(url);
-				String^ fileName = System::IO::Path::GetFileName(uri->LocalPath);
+		// Tuyệt chiêu băm chuỗi: Tách các link ra dựa vào dấu xuống dòng
+		array<String^>^ links = draggedText->Split(
+			gcnew array<System::Char>{'\n', '\r'},
+			System::StringSplitOptions::RemoveEmptyEntries
+		);
 
-				if (String::IsNullOrEmpty(fileName) || !fileName->Contains(".")) {
-					fileName = "anh_mang_" + System::DateTime::Now.ToString("HHmmss") + ".jpg";
+		for each (String ^ rawLink in links) {
+			String^ url = rawLink->Trim();
+			if (String::IsNullOrEmpty(url)) continue;
+
+			// Chỉ xử lý nếu là link web chuẩn
+			if (url->StartsWith("http://") || url->StartsWith("https://")) {
+				String^ fileName = "";
+				try {
+					Uri^ uri = gcnew Uri(url);
+					// Lấy nguyên gốc tên file từ URL và giải mã các ký tự web (ví dụ %20 thành dấu cách)
+					fileName = System::Uri::UnescapeDataString(System::IO::Path::GetFileName(uri->LocalPath));
+				}
+				catch (...) {}
+
+				// CHỈ TỰ ĐẶT TÊN NẾU LINK CỤT LỦN (Ví dụ kéo cái link trang chủ https://google.com/)
+				if (String::IsNullOrWhiteSpace(fileName) || fileName == "/") {
+					fileName = "Tap_Tin_Web_" + System::DateTime::Now.ToString("HHmmss");
 				}
 
+				// Tạo giao diện thanh tải
 				UIdownLoad::DownloadItemControl^ downloadItem = gcnew UIdownLoad::DownloadItemControl();
-				downloadItem->SetupInfo(fileName, L"Đang kết nối...", System::DateTime::Now.ToString("dd/MM/yyyy"));
+				downloadItem->SetupInfo(fileName,"", System::DateTime::Now.ToString("dd/MM/yyyy HH:mm"));
 				flowLayoutPanel1->Controls->Add(downloadItem);
 
+				// Khởi tạo luồng tải ngầm cho link HTTP này
 				System::Threading::Thread^ downloadThread = gcnew System::Threading::Thread(
 					gcnew System::Threading::ParameterizedThreadStart(this, &Form1::DownloadHttpTask)
 				);
 
-				// mảng 4 phần tử
 				array<System::Object^>^ args = gcnew array<System::Object^>(4);
 				args[0] = url;
 				args[1] = saveFolder;
@@ -354,6 +374,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 			}
 		}
 	}
+}
 
 
 				   // LUỒNG TẢI TỪ SERVER LOCAL (TCP)
@@ -367,7 +388,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 		String^ ip = "127.0.0.1";
 		int port = 9000;
 
-		System::Action<int, String^>^ progressCallback = gcnew System::Action<int, String^>(itemControl, &UIdownLoad::DownloadItemControl::UpdateProgress);
+		System::Action<int, String^, String^>^ progressCallback = gcnew System::Action<int, String^, String^>(itemControl, &UIdownLoad::DownloadItemControl::UpdateProgress);
 		bool success = CoreLogic::Downloader::DownloadFileFromTCPServer(ip, port, fileName, saveFolder, progressCallback);
 
 		this->Invoke(gcnew System::Action<bool, UIdownLoad::DownloadItemControl^>(this, &Form1::UpdateUI), success, itemControl);
@@ -390,7 +411,7 @@ private: void DownloadHttpTask(System::Object^ obj) {
 			fileName = "downloaded_file.dat";
 		}
 
-		System::Action<int, String^>^ progressCallback = gcnew System::Action<int, String^>(itemControl, &UIdownLoad::DownloadItemControl::UpdateProgress);
+		System::Action<int, String^, String^>^ progressCallback = gcnew System::Action<int, String^, String^>(itemControl, &UIdownLoad::DownloadItemControl::UpdateProgress);
 		bool success = CoreLogic::Downloader::DownloadFromHttp(url, fileName, saveFolder, progressCallback);
 
 		this->Invoke(gcnew System::Action<bool, UIdownLoad::DownloadItemControl^>(this, &Form1::UpdateUI), success, itemControl);

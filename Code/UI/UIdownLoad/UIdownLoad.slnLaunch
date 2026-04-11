@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "UIdownLoad\\UIdownLoad.vcxproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\..\\TCPServer\\Server\\Server.vcxproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

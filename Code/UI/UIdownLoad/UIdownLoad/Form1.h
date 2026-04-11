@@ -198,7 +198,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->statusFile->AutoSize = true;
 			this->statusFile->ForeColor = System::Drawing::Color::Black;
-			this->statusFile->Location = System::Drawing::Point(400, 10);
+			this->statusFile->Location = System::Drawing::Point(377, 10);
 			this->statusFile->Name = L"statusFile";
 			this->statusFile->Size = System::Drawing::Size(67, 16);
 			this->statusFile->TabIndex = 2;

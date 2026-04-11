@@ -6,7 +6,7 @@ Một ứng dụng quản lý tải xuống nhiều tệp tin cùng lúc với g
 
 ### ✨ Tính năng nổi bật
 
-* **🖱️ Drag & Drop:** Kéo thả tệp tin trực tiếp từ Windows Explorer vào ứng dụng để chuẩn bị tải.
+* **🖱️ Drag & Drop:** Kéo thả tệp tin vào ứng dụng để tải.
 * **🗂️ Giao diện Card UI:** Thiết kế các thẻ (Cards) riêng biệt, giúp danh sách tệp tin rõ ràng, dễ nhìn.
 * **📊 Thông tin thời gian thực:** Hiển thị chi tiết Tên tệp, Kích thước, Tốc độ, Trạng thái và Ngày thêm.
 * **✨ Hiệu ứng Tương tác:** Giao diện phản hồi mượt mà (Hover effect) khi di chuyển chuột qua các mục.
@@ -20,7 +20,7 @@ Một ứng dụng quản lý tải xuống nhiều tệp tin cùng lúc với g
 | :--- | :--- |
 | **Ngôn ngữ lập trình** | C++/CLI (Visual C++) |
 | **Framework** | .NET Framework (Windows Forms) |
-| **Môi trường phát triển** | Visual Studio 2022 |
+| **Môi trường phát triển** | Visual Studio 2022/Visual Studio 2026 |
 | **Kiến trúc** | Custom UserControl & Event-driven Programming |
 
 ---
@@ -38,10 +38,10 @@ Một ứng dụng quản lý tải xuống nhiều tệp tin cùng lúc với g
 
 ### 🚀 Hướng dẫn chạy thử
 
-1. Mở file `.sln` bằng **Visual Studio 2022**.
+1. Mở file `.sln` bằng **Visual Studio 2022/ Visual Studio 2026** (ưu tiên phiên bản 2026).
 2. Đảm bảo đã cài đặt package **Desktop development with C++** và **C++/CLI support**.
 3. Nhấn `F5` để biên dịch và chạy ứng dụng.
 
 ---  
-**📅 Cập nhật lần cuối:** 10/04/2026  
+**📅 Cập nhật lần cuối:** 11/04/2026  
 **🏫 Đồ án:** Lập trình mạng / Windows Programming.

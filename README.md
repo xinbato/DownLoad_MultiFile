@@ -41,7 +41,7 @@ Một ứng dụng quản lý tải xuống nhiều tệp tin cùng lúc với g
 1. Mở file `.sln` bằng **Visual Studio 2022/ Visual Studio 2026** (ưu tiên phiên bản 2026).
 2. Đảm bảo đã cài đặt package **Desktop development with C++** và **C++/CLI support**.
 3. Nhấn `F5` để biên dịch và chạy ứng dụng.
-### Hướng dẫn sử dụng
+### Hướng dẫn sử dụng (tìm và xem chi tiết hướng dẫn tại thư mục Extra)
 1. Tạo folder "Kho_File_Server" ở ổ D để làm nơi lấy dữ liệu cho client
 2. Tạo foler "Downloads" ở ổ D để làm nơi lưu trữ dữ liệu sau khi tải từ server
 3. Sau khi chạy chương trình bấm vào nút "Làm mới" để tải các file từ server lên

@@ -48,11 +48,14 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ statusFile;
 	private: System::Windows::Forms::Label^ sizeFile;
 	private: System::Windows::Forms::Label^ dayFile;
-	private: System::ComponentModel::Container^ components;
+	private: System::ComponentModel::IContainer^ components;
+
 	
 	private: System::Windows::Forms::CheckedListBox^ checkedListBox1;
 	private: System::Windows::Forms::Button^ btnRefresh_Click;
 	private: System::Windows::Forms::ListBox^ listBoxFiles;
+	private: System::Windows::Forms::ToolTip^ toolTip1;
+	private: System::Windows::Forms::ToolTip^ toolTip2;
 
 		   System::Drawing::Font^ headerFont = gcnew System::Drawing::Font("Segoe UI", 9, System::Drawing::FontStyle::Bold);
 
@@ -63,6 +66,7 @@ namespace CppCLRWinFormsProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->listBoxFiles = (gcnew System::Windows::Forms::ListBox());
 			this->btnRefresh_Click = (gcnew System::Windows::Forms::Button());
@@ -77,6 +81,8 @@ namespace CppCLRWinFormsProject {
 			this->nameFile = (gcnew System::Windows::Forms::Label());
 			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
+			this->toolTip2 = (gcnew System::Windows::Forms::ToolTip(this->components));
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
@@ -244,6 +250,16 @@ namespace CppCLRWinFormsProject {
 			this->label2->Size = System::Drawing::Size(100, 23);
 			this->label2->TabIndex = 0;
 			this->label2->Text = L"Khu vực tải";
+			// 
+			// toolTip1
+			// 
+			this->toolTip1->ToolTipIcon = System::Windows::Forms::ToolTipIcon::Info;
+			this->toolTip1->ToolTipTitle = L"Thông báo hệ thống";
+			// 
+			// toolTip2
+			// 
+			this->toolTip2->ToolTipIcon = System::Windows::Forms::ToolTipIcon::Warning;
+			this->toolTip2->ToolTipTitle = L"Cảnh báo hệ thống";
 			// 
 			// Form1
 			// 
@@ -421,11 +437,13 @@ private: void DownloadHttpTask(System::Object^ obj) {
 		// ==========================================
 	private: void UpdateUI(bool success, UIdownLoad::DownloadItemControl^ itemControl) {
 		if (success) {
-			MessageBox::Show(this, L"Đã tải xong file!", "Thành công", MessageBoxButtons::OK, MessageBoxIcon::Information);
-			btnRefresh_Click->Enabled=true;
+			System::Drawing::Point mousePos = System::Windows::Forms::Cursor::Position;
+			toolTip1->Show(L"File đã được tải xong!", this, mousePos.X, mousePos.Y, 3000);
+			btnRefresh_Click->Enabled = true;
 		}
 		else {
-			MessageBox::Show(this, L"Không tìm thấy file trên Server hoặc mất kết nối!", "Lỗi", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			System::Drawing::Point mousePos = System::Windows::Forms::Cursor::Position;
+			toolTip2->Show(L"File tải thất bại!", this,mousePos.X,mousePos.Y, 3000);
 			btnRefresh_Click->Enabled=true;
 		}
 	}

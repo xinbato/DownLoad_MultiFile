@@ -99,7 +99,7 @@ namespace CoreLogic {
                 long long fileSize = response->ContentLength;
 
                 // Tính kích thước MB
-                String^ sizeStr = "Không xác định";
+                String^ sizeStr = L"Không xác định";
                 if (fileSize > 0) sizeStr = Math::Round(fileSize / 1024.0 / 1024.0, 2).ToString() + " MB";
 
                 String^ fullSavePath = System::IO::Path::Combine(saveFolder, fileName);
@@ -120,7 +120,7 @@ namespace CoreLogic {
                         if (percent > lastPercent) {
                             lastPercent = percent;
                             TimeSpan elapsed = DateTime::Now - startTime;
-                            String^ speedTxt = "Đang tải...";
+                            String^ speedTxt = L"Đang tải...";
                             if (elapsed.TotalSeconds > 0) {
                                 double speedMBps = (totalReceived / 1024.0 / 1024.0) / elapsed.TotalSeconds;
                                 speedTxt = Math::Round(speedMBps, 2).ToString() + " MB/s";

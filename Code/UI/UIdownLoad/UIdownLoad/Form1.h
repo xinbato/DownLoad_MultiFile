@@ -240,6 +240,7 @@ namespace CppCLRWinFormsProject {
 			this->flowLayoutPanel1->TabIndex = 1;
 			this->flowLayoutPanel1->DragDrop += gcnew System::Windows::Forms::DragEventHandler(this, &Form1::flowLayoutPanel1_DragDrop);
 			this->flowLayoutPanel1->DragEnter += gcnew System::Windows::Forms::DragEventHandler(this, &Form1::flowLayoutPanel1_DragEnter);
+			this->flowLayoutPanel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::flowLayoutPanel1_Paint);
 			// 
 			// label2
 			// 
@@ -314,7 +315,10 @@ private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Win
  // SỰ KIỆN THẢ CHUỘT ĐỂ BẮT ĐẦU TẢI
 
 private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
-	String^ saveFolder = "D:\\Downloads\\"; // Thư mục lưu file
+	String^ saveFolder = "D:\\Downloads\\";
+	if (!System::IO::Directory::Exists(saveFolder)) {
+		System::IO::Directory::CreateDirectory(saveFolder);
+	} // Thư mục lưu file
 
 	// =========================================================
 	// TRƯỜNG HỢP 1: THẢ FILE TỪ DANH SÁCH BÊN TRÁI (TẢI TCP LOCAL)
@@ -359,7 +363,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 				try {
 					Uri^ uri = gcnew Uri(url);
 					// Lấy nguyên gốc tên file từ URL và giải mã các ký tự web (ví dụ %20 thành dấu cách)
-					fileName = System::Uri::UnescapeDataString(System::IO::Path::GetFileName(uri->LocalPath));
+					fileName = System::Text::RegularExpressions::Regex::Replace(System::Uri::UnescapeDataString(System::IO::Path::GetFileName(uri->LocalPath)), "[?<>|:\"*\\\\]", "");
 				}
 				catch (...) {}
 
@@ -476,5 +480,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	private: System::Void btnDownload_Click_1(System::Object^ sender, System::EventArgs^ e) {}
 	private: System::Void checkedListBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
+private: System::Void flowLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
 };
 }

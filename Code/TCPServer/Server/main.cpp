@@ -59,7 +59,9 @@ void HandleClient(Object^ clientObj) {
             }
         }
     }
-    catch (Exception^) {}
+    catch (Exception^ ex) {
+        Console::WriteLine("[!] Client error: " + ex->Message);
+    }
 
     writer->Close();
     reader->Close();

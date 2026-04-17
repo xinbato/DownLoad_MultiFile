@@ -314,7 +314,10 @@ private: System::Void listBoxFiles_MouseDown(System::Object^ sender, System::Win
  // SỰ KIỆN THẢ CHUỘT ĐỂ BẮT ĐẦU TẢI
 
 private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::Windows::Forms::DragEventArgs^ e) {
-	String^ saveFolder = "D:\\Downloads\\"; // Thư mục lưu file
+	String^ saveFolder = "D:\\Downloads\\";
+	if (!System::IO::Directory::Exists(saveFolder)) {
+		System::IO::Directory::CreateDirectory(saveFolder);
+	} // Thư mục lưu file
 
 	// =========================================================
 	// TRƯỜNG HỢP 1: THẢ FILE TỪ DANH SÁCH BÊN TRÁI (TẢI TCP LOCAL)
@@ -359,7 +362,7 @@ private: System::Void flowLayoutPanel1_DragDrop(System::Object^ sender, System::
 				try {
 					Uri^ uri = gcnew Uri(url);
 					// Lấy nguyên gốc tên file từ URL và giải mã các ký tự web (ví dụ %20 thành dấu cách)
-					fileName = System::Uri::UnescapeDataString(System::IO::Path::GetFileName(uri->LocalPath));
+					fileName = System::Text::RegularExpressions::Regex::Replace(fileName, "[?<>|:\"*\\\\]", "");
 				}
 				catch (...) {}
 

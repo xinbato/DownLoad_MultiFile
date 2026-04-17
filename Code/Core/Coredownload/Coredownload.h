@@ -34,8 +34,9 @@ namespace CoreLogic {
 
                 client->Close();
             }
-            catch (Exception^) {}
-
+            catch (Exception^ ex) {
+                System::Diagnostics::Debug::WriteLine("[WARN] Server connection failed: " + ex->Message);
+            }
             return fileList;
         }
         // 1. HÀM TẢI TCP
@@ -68,11 +69,12 @@ namespace CoreLogic {
                     fs->Write(buffer, 0, bytesRead);
                     totalReceived += bytesRead;
                     int percent = (int)((totalReceived * 100) / fileSize);
+                    percent = Math::Min(percent, 100);
 
                     if (percent > lastPercent) {
                         lastPercent = percent;
                         TimeSpan elapsed = DateTime::Now - startTime;
-                        String^ speedTxt = "Đang tải...";
+                        String^ speedTxt = L"Đang tải...";
                         if (elapsed.TotalSeconds > 0) {
                             double speedMBps = (totalReceived / 1024.0 / 1024.0) / elapsed.TotalSeconds;
                             speedTxt = Math::Round(speedMBps, 2).ToString() + " MB/s";
@@ -83,7 +85,10 @@ namespace CoreLogic {
                 }
                 fs->Close(); client->Close(); return true;
             }
-            catch (Exception^) { return false; }
+            catch (Exception^ ex) {
+                System::Diagnostics::Debug::WriteLine("Download Error: " + ex->Message);
+                return false;
+            }
         }
 
         // 2. HÀM TẢI HTTP
@@ -91,7 +96,9 @@ namespace CoreLogic {
         {
             try {
                 System::Net::ServicePointManager::SecurityProtocol = (System::Net::SecurityProtocolType)3072;
-                System::Net::HttpWebRequest^ request = (System::Net::HttpWebRequest^)System::Net::WebRequest::Create(url);
+                System::Net::HttpWebRequest^ request =
+                    (System::Net::HttpWebRequest^)System::Net::WebRequest::Create(url);
+                request->AllowAutoRedirect = true;  
                 request->Timeout = 5000;
                 request->UserAgent = "Mozilla/5.0";
 
@@ -99,8 +106,10 @@ namespace CoreLogic {
                 long long fileSize = response->ContentLength;
 
                 // Tính kích thước MB
-                String^ sizeStr = L"Không xác định";
-                if (fileSize > 0) sizeStr = Math::Round(fileSize / 1024.0 / 1024.0, 2).ToString() + " MB";
+                if (fileSize < 0) fileSize = 0;  
+                String^ sizeStr = (fileSize > 0) ?
+                    Math::Round(fileSize / 1024.0 / 1024.0, 2).ToString() + " MB" :
+                    L"Không xác định";
 
                 String^ fullSavePath = System::IO::Path::Combine(saveFolder, fileName);
                 System::IO::Stream^ stream = response->GetResponseStream();
@@ -117,6 +126,7 @@ namespace CoreLogic {
                     totalReceived += bytesRead;
                     if (fileSize > 0) {
                         int percent = (int)((totalReceived * 100) / fileSize);
+                        percent = Math::Min(percent, 100);
                         if (percent > lastPercent) {
                             lastPercent = percent;
                             TimeSpan elapsed = DateTime::Now - startTime;
@@ -132,7 +142,10 @@ namespace CoreLogic {
                 }
                 fs->Close(); stream->Close(); response->Close(); return true;
             }
-            catch (Exception^) { return false; }
+            catch (Exception^ ex) {
+                System::Diagnostics::Debug::WriteLine("Download Error: " + ex->Message);
+                return false;
+            }
         }
     };
 }

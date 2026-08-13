@@ -1,7 +1,7 @@
 ﻿#pragma once
-//test
+
 #if defined(_MANAGED) || defined(__cplusplus_cli)
-//khygfrgfghjgfrsdfh
+
 using namespace System;
 using namespace System::IO;
 using namespace System::Net::Sockets;

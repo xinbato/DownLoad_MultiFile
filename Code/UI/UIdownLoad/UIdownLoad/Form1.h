@@ -471,6 +471,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		btnRefresh_Click->Enabled=false;
 	}
 }
+	   //test repository
 	// Các sự kiện UI nhỏ nhặt giữ nguyên
 	private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {}
 	private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {}
